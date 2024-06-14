@@ -16,7 +16,6 @@ var ajaxCall = (key, url, messages) => {
         "content": messages
       }
     ],
-        max_tokens: 1024,
         temperature: 0.5,
       }),
       headers: {
