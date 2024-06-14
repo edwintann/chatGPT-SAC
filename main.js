@@ -15,8 +15,7 @@ var ajaxCall = (key, url, messages) => {
         "role": "user",
         "content": messages
       }
-    ],
-        temperature: 0.5,
+    ]
       }),
       headers: {
         "Content-Type": "application/json",
