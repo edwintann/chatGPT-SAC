@@ -9,7 +9,7 @@ var ajaxCall = (key, url, messages) => {
         messages: [
       {
         "role": "system",
-        "content": "You are a helpful assistant."
+        "content": "You are a helpful assistant and data scientist that can analyze a dataset."
       },
       {
         "role": "user",
