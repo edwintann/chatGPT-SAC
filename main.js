@@ -5,11 +5,11 @@ var ajaxCall = (key, url, messages) => {
       type: "POST",
       dataType: "json",
       data: JSON.stringify({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o",
         messages: [
       {
         "role": "system",
-        "content": "You are a helpful assistant and data scientist that can analyze a dataset."
+        "content": "You are a helpful assistant and data scientist that can analyze a dataset. Please calculate strictly step by step without skipping any steps. Please follow the steps to perform arithmetic operations, and check the result at each step to ensure the correctness of the calculation"
       },
       {
         "role": "user",
