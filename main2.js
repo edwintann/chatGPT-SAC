@@ -12,8 +12,9 @@ var ajaxCall = (key, url, prompt) => {
         temperature: 0.5,
       }),
       headers: {
+        "AI-Resource-Group": "default",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
+        "Authorization": `Bearer ${key}`,
       },
       crossDomain: true,
       success: function (response, status, xhr) {
@@ -30,7 +31,30 @@ var ajaxCall = (key, url, prompt) => {
 
 const url = "https://api.ai.prod.ap-southeast-2.aws.ml.hana.ondemand.com/v2/inference/deployments/da9a4a9867cb32b8/chat";
 
-(function () {
+async function getAccessToken(username, password, authUrl) {
+  const authHeaders = {
+    "AI-Resource-Group": "default",
+    "Content-Type": "application/json",
+    "Authorization": `Basic ${btoa(`${username}:${password}`)}`
+  };
+ 
+  try {
+    const response = await axios.get(authUrl, {
+      headers: authHeaders
+    });
+ 
+    if (response.status === 200) {
+      return response.data.access_token;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching access token:', error);
+    return null;
+  }
+}
+
+(async function () {
   const template = document.createElement("template");
   template.innerHTML = `
       <style>
@@ -39,7 +63,15 @@ const url = "https://api.ai.prod.ap-southeast-2.aws.ml.hana.ondemand.com/v2/infe
       </div>
     `;
   class MainWebComponent extends HTMLElement {
-    async post(apiKey, endpoint, prompt) {
+    async post(clientID, clientSecret, endpoint, prompt) {
+
+      const authUrl = "https://dial-3-0-zme762l7.authentication.ap10.hana.ondemand.com/oauth/token?grant_type=client_credentials";
+      const apiKey = await getAccessToken(clientId, clientSecret, authUrl);
+      if (!apiKey) {
+        console.error('Failed to retrieve API key');
+        return;
+      }
+      
       const { response } = await ajaxCall(
         apiKey,
         `${url}/${endpoint}`,
