@@ -35,7 +35,6 @@ async function getAccessToken(username, password, authUrl) {
   const authHeaders = {
     "AI-Resource-Group": "default",
     "Content-Type": "application/json"
-    //"Authorization": `Basic ${btoa(`${username}:${password}`)}`
   };
  
   try {
@@ -67,7 +66,7 @@ async function getAccessToken(username, password, authUrl) {
     async post(clientID, clientSecret, endpoint, prompt) {
 
       const authUrl = "https://dial-3-0-zme762l7.authentication.ap10.hana.ondemand.com/oauth/token?grant_type=client_credentials";
-      const apiKey = await getAccessToken(clientId, clientSecret, authUrl);
+      const apiKey = await getAccessToken(clientID, clientSecret, authUrl);
       if (!apiKey) {
         console.error('Failed to retrieve API key');
         return;
