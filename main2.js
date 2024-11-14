@@ -34,8 +34,8 @@ const url = "https://api.ai.prod.ap-southeast-2.aws.ml.hana.ondemand.com/v2/infe
 async function getAccessToken(username, password, authUrl) {
   const authHeaders = {
     "AI-Resource-Group": "default",
-    "Content-Type": "application/json",
-    "Authorization": `Basic ${btoa(`${username}:${password}`)}`
+    "Content-Type": "application/json"
+    //"Authorization": `Basic ${btoa(`${username}:${password}`)}`
   };
  
   try {
@@ -44,6 +44,7 @@ async function getAccessToken(username, password, authUrl) {
     });
  
     if (response.status === 200) {
+      console.log(response.data.access_token);
       return response.data.access_token;
     } else {
       return null;
